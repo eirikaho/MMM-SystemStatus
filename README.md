@@ -4,6 +4,7 @@ System Status (ping, download speed, upload speed, cpu temp ++) Module for Magic
 Inspired by  [MMM-NetworkConnection](https://github.com/slametps/MMM-NetworkConnection) and [MMM-SystemStats](https://github.com/BenRoe/MMM-SystemStats)
 
 ## Example
+
 ![](others/MMM-SystemStatus.png)
 
 ## Installatoion
