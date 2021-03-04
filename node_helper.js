@@ -1,12 +1,9 @@
 var NodeHelper = require('node_helper');
-var ping = require('ping');
-var linkSpeed = require('link-speed');
 var exec = require('child_process').exec;
 
 module.exports = NodeHelper.create({
   start: function() {
     console.log(this.name + ' helper started ...');
-    this.linkSpeedAwaiter = linkSpeed.default;
   },
   
   socketNotificationReceived: function(notification, payload) {
@@ -22,23 +19,19 @@ module.exports = NodeHelper.create({
   
   testNetcon: function() {
 		console.log(`${this.name}: starting network connection testing`)
-		ping.promise.probe('google.com').then((res) => {
-		  const ping = res.time;
-		  console.log(`${this.name}: ping:  ${JSON.stringify(ping)}`);
-		  this.sendSocketNotification('NETCONN_RESULT_PING', ping);
-		});
-		/*
-		console.log(`${this.name}: linkSpeed: [${typeof(this.linkSpeedAwaiter)}] ${JSON.stringify(this.linkSpeedAwaiter)}`);
 		
-		this.linkSpeedAwaiter()
-			.then((res) => {
-				console.log(`${this.name}: linkspeed:  ${JSON.stringify(res)}`);
-				this.sendSocketNotification('NETCONN_RESULT_DOWNLOAD', res.down.human);
-				this.sendSocketNotification('NETCONN_RESULT_UPLOAD', res.up.human);
-			});
-		*/
-		this.sendSocketNotification('NETCONN_RESULT_DOWNLOAD', 102.3);
-		this.sendSocketNotification('NETCONN_RESULT_UPLOAD', 98.8);
+		exec("./modules/MMM-SystemStatus/scripts/speedtest.sh", (error, stdout, stderr) => {
+			if (error) {
+				console.log(error);
+				return;
+			}
+			console.log(`${this.name}: speedtest result: ${stdout}`);
+			var resArr = stdout.split(", ");
+		  this.sendSocketNotification('NETCONN_RESULT_PING', parseFloat(resArr[2]).toFixed(0));
+		  this.sendSocketNotification('NETCONN_RESULT_DOWNLOAD', parseFloat(resArr[3]).toFixed(0));
+		  this.sendSocketNotification('NETCONN_RESULT_UPLOAD', parseFloat(resArr[4]).toFixed(0));
+		});
+		
   },
   
   cpuTemp: function() {

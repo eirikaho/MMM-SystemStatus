@@ -8,7 +8,7 @@ Module.register('MMM-SystemStatus', {
     animationSpeed: 2.5 * 1000,
 		initialLoadDelay: 2.5 * 1000,
 		language: config.language || 'en',
- 		updateInterval: 60 * 1000
+ 		updateInterval: 300 * 1000
 	},
 	
 	getScripts() {
@@ -52,7 +52,7 @@ Module.register('MMM-SystemStatus', {
         let s = ''
         s += "<span class=\"fa fa-cloud\"></span> "+ (this.pingDelay && this.pingDelay + "ms" || "n/a");
         s += " ";
-        s += "<span class=\"fa fa-download\"></span>"+ (this.downloadSpeed && this.downloadSpeed + "Mbps" || "n/a");
+        s += "<span class=\"fa fa-download\"></span> "+ (this.downloadSpeed && this.downloadSpeed + "Mbps" || "n/a");
         s += " ";
         s += "<span class=\"fa fa-upload\"></span> "+ (this.uploadSpeed && this.uploadSpeed + "Mbps" || "n/a");
         s += " ";

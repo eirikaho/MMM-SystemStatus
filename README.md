@@ -1,7 +1,8 @@
 # MMM-SystemStatus [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat)]
 
 System Status (ping, download speed, upload speed, cpu temp ++) Module for MagicMirror<sup>2</sup>.
-Inspired by  [MMM-NetworkConnection](https://github.com/slametps/MMM-NetworkConnection) and [MMM-SystemStats](https://github.com/BenRoe/MMM-SystemStats)
+Inspired by  [MMM-NetworkConnection](https://github.com/slametps/MMM-NetworkConnection) and [MMM-SystemStats](https://github.com/BenRoe/MMM-SystemStats).
+Using (speedtest-linux)[https://github.com/rsvp/speedtest-linux] as a script instead of the speedtest-net package because some modules causes websocket issues when used in combination with speedtest-net
 
 ## Example
 
@@ -22,13 +23,3 @@ Inspired by  [MMM-NetworkConnection](https://github.com/slametps/MMM-NetworkConn
         }
     }
     ```
-## Config Options
-
-| **Option** | **Default** | **Description** |
-| --- | --- | --- |
-| `updateInterval` | `600000 ms` (10 minutes) | how often should the devices states refreshed |
-| `maxTime` | `5000` milliseconds | how long to do speedtest |
-| `initialLoadDelay` | `2500` milliseconds | how long to delay to load the module |
-| `decimal` | `1` | how many decimals for the round |
-| `displayTextStatus` | `true` | display connection text status or not |
-| `animationSpeed` | `2500` milliseconds | speed of the update animation |

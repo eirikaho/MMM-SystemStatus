@@ -22,7 +22,5 @@
 	},
 	"homepage": "https://github.com/eirikaho/MMM-SystemStatus#readme",
 	"dependencies": {
-		"link-speed": "^1.0.0",
-		"ping": "^0.4.0"
 	}
 }
