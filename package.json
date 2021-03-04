@@ -1,0 +1,28 @@
+{
+	"name": "MMM-SystemStatus",
+	"version": "1.0.0",
+	"description": "Display magic mirror status bar (connection status, ping, download, upload speed, cpu temp)",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/eirikaho/MMM-SystemStatus"
+	},
+	"keywords": [
+		"MagicMirror",
+		"NetworkConnection",
+		"SystemStatus",
+		"Temperature",
+		"network",
+		"connection",
+		"speedtest"
+	],
+	"author": "Eirik Aasved Holst",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/eirikaho/MMM-SystemStatus/issues"
+	},
+	"homepage": "https://github.com/eirikaho/MMM-SystemStatus#readme",
+	"dependencies": {
+		"link-speed": "^1.0.0",
+		"ping": "^0.4.0"
+	}
+}
