@@ -19,7 +19,7 @@ Module.register('MMM-SystemStatus', {
     return ['font-awesome.css'];
   },
 
-	start:() {
+	start() {
 		Log.info('Starting module: ' + this.name);
 
 		moment.locale(this.config.language);
@@ -30,6 +30,7 @@ Module.register('MMM-SystemStatus', {
       this.doRunNetworkConnectionTest();
       setInterval(() => {
         this.doRunNetworkConnectionTest();
+        this.doRunCpuTempMeasurement();
       }, this.config.updateInterval);
     }, this.config.initialLoadDelay);
 
@@ -49,13 +50,13 @@ Module.register('MMM-SystemStatus', {
       if (connectionActive) {
         wrapper.className = 'small';
         let s = ''
-        s += "<span class=\"fa fa-cloud\"></span> "+ (this.pingDelay && this.pingDelay + " ms" || "n/a");
+        s += "<span class=\"fa fa-cloud\"></span> "+ (this.pingDelay && this.pingDelay + "ms" || "n/a");
         s += " ";
-        s += "<span class=\"fa fa-download\"></span>"+ (this.downloadSpeed && this.downloadSpeed + " Mbps" || "n/a");
+        s += "<span class=\"fa fa-download\"></span>"+ (this.downloadSpeed && this.downloadSpeed + "Mbps" || "n/a");
         s += " ";
-        s += "<span class=\"fa fa-upload\"></span> "+ (this.uploadSpeed && this.uploadSpeed + " Mbps" || "n/a");
+        s += "<span class=\"fa fa-upload\"></span> "+ (this.uploadSpeed && this.uploadSpeed + "Mbps" || "n/a");
         s += " ";
-        s += "<span class=\"fas fa-thermometer-three-quarters\"></span> "+ (this.cpuTemp && this.cpuTemp + " °C" || "n/a");
+        s += "<span class=\"fas fa-thermometer-three-quarters\"></span> "+ (this.cpuTemp && this.cpuTemp + "°C" || "n/a");
         wrapper.innerHTML = s;
       } else {
         wrapper.className = 'normal bright';
@@ -73,6 +74,10 @@ Module.register('MMM-SystemStatus', {
   doRunNetworkConnectionTest() {
     this.sendSocketNotification('NETCONN_TEST_START', {'config':this.config});
   },
+  
+  doRunCpuTempMeasurement() {
+    this.sendSocketNotification('REFRESH_CPU_TEMP', {'config':this.config});
+  },
 
   socketNotificationReceived: function(notification, payload) {
   	switch(notification) {
@@ -82,9 +87,11 @@ Module.register('MMM-SystemStatus', {
 	    case 'NETCONN_RESULT_UPLOAD':
 	    	this.uploadSpeed = payload;
 	      break;
-	    case 'NETCONN_RESULT_UPLOAD':
-	    	this.uploadSpeed = payload;
+	    case 'NETCONN_RESULT_PING':
+	    	this.pingDelay = payload;
 	      break;
+	    case 'CPU_TEMP':
+	    	this.cpuTemp = payload;
   	}
     this.updateDom(this.config.animationSpeed);
   }
